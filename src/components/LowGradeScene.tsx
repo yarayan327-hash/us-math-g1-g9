@@ -6,7 +6,7 @@ import {
 } from '../data/courseVisualConfig';
 
 export function getLowGradeIntroScene(levelNumber: number, activityId: string): ProblemVisualConfig['intro'] | null {
-  if (levelNumber > 3) return null;
+  if (levelNumber < 1) return null;
   return getProblemVisualConfig(activityId)?.intro ?? null;
 }
 
@@ -15,7 +15,7 @@ export function getLowGradeTeachingObject(
   activityId: string,
   stepIndex: number
 ): ProblemVisualConfig['teaching'] | null {
-  if (levelNumber > 3) return null;
+  if (levelNumber > 6) return null;
   if (stepIndex !== 0) return null;
   const teaching = getProblemVisualConfig(activityId)?.teaching ?? null;
   return teaching?.object ? teaching : null;
@@ -57,6 +57,15 @@ export const LowGradeIntroScene: React.FC<{ config: NonNullable<ProblemVisualCon
         draggable={false}
       />
     )}
+    {config.objectFamily?.map((asset, index) => (
+      <img
+        key={`${asset.src}-${index}`}
+        src={asset.src}
+        alt=""
+        className={`vm-low-intro-scene__family vm-low-intro-scene__family--${index + 1}`}
+        draggable={false}
+      />
+    ))}
   </div>
 );
 

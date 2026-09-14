@@ -97,7 +97,7 @@ export const StickerPackScaleModel: React.FC<StickerPackScaleModelProps> = ({
           fontWeight="800"
           textAnchor="middle"
         >
-          {language === 'ZH' ? '📦 1 张手作贴纸包 (1 Pack)' : '📦 1 Craft Sticker Pack'}
+          {language === 'ZH' ? '1 张手作贴纸包 (1 Pack)' : '1 Craft Sticker Pack'}
         </text>
 
         {/* Row 1: 5 Glow Stickers (Blue) */}
@@ -134,7 +134,7 @@ export const StickerPackScaleModel: React.FC<StickerPackScaleModelProps> = ({
                   fontWeight="800"
                   textAnchor="middle"
                 >
-                  🌟 {i + 1}
+                  G {i + 1}
                 </text>
               </g>
             );
@@ -175,7 +175,7 @@ export const StickerPackScaleModel: React.FC<StickerPackScaleModelProps> = ({
                   fontWeight="800"
                   textAnchor="middle"
                 >
-                  ✨ {i + 1}
+                  S {i + 1}
                 </text>
               </g>
             );
@@ -263,27 +263,25 @@ export const StickerPackScaleModel: React.FC<StickerPackScaleModelProps> = ({
               >
                 {language === 'ZH' ? '荧光 5张' : '5 Glow'}
               </text>
-              <div className="flex gap-1">
-                {Array.from({ length: glowPerPack }).map((_, gIdx) => {
-                  const gw = 22;
-                  const gx = px + 8 + gIdx * (gw + 3);
-                  const gy = PACK_Y + 50;
-                  return (
-                    <rect
-                      key={`p${pIdx}-glow-${gIdx}`}
-                      x={gx}
-                      y={gy}
-                      width={gw}
-                      height="38"
-                      rx="4"
-                      fill={GLOW_COLOR}
-                      stroke="#0284C7"
-                      strokeWidth="1.5"
-                      opacity={showGlitterScaled ? 0.45 : 1}
-                    />
-                  );
-                })}
-              </div>
+              {Array.from({ length: glowPerPack }).map((_, gIdx) => {
+                const gw = 22;
+                const gx = px + 8 + gIdx * (gw + 3);
+                const gy = PACK_Y + 50;
+                return (
+                  <rect
+                    key={`p${pIdx}-glow-${gIdx}`}
+                    x={gx}
+                    y={gy}
+                    width={gw}
+                    height="38"
+                    rx="4"
+                    fill={GLOW_COLOR}
+                    stroke="#0284C7"
+                    strokeWidth="1.5"
+                    opacity={showGlitterScaled ? 0.45 : 1}
+                  />
+                );
+              })}
             </g>
 
             {/* Divider inside pack */}
@@ -338,7 +336,7 @@ export const StickerPackScaleModel: React.FC<StickerPackScaleModelProps> = ({
                         fontWeight="800"
                         textAnchor="middle"
                       >
-                        ✨
+                        S
                       </text>
                     )}
                   </g>

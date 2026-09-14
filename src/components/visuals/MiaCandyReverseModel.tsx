@@ -75,7 +75,7 @@ export const MiaCandyReverseModel: React.FC<MiaCandyReverseModelProps> = ({
           textAnchor="middle"
         >
           {wholeRebuilt
-            ? (language === 'ZH' ? '姐姐的 1/2 = 10 颗 🍬' : 'Sister’s 1/2 = 10 🍬')
+            ? (language === 'ZH' ? '姐姐的 1/2 = 10 颗' : 'Sister’s 1/2 = 10')
             : sisterGiven
               ? (language === 'ZH' ? '分给姐姐的 1/2 (已送出)' : 'Sister: 1/2 (Given away)')
               : (language === 'ZH' ? '整袋糖果的前半部分 (1/2)' : 'First 1/2 of candy bag')}
@@ -180,8 +180,8 @@ export const MiaCandyReverseModel: React.FC<MiaCandyReverseModelProps> = ({
           BAR_X + TOTAL_W,
           BAR_Y - 14,
           language === 'ZH'
-            ? '半袋糖果 = 4 (弟弟) + 6 (自留) = 10 颗 🍬'
-            : 'Half bag = 4 (Brother) + 6 (Mia) = 10 candies 🍬',
+            ? '半袋糖果 = 4 (弟弟) + 6 (自留) = 10 颗'
+            : 'Half bag = 4 (Brother) + 6 (Mia) = 10 candies',
           'top',
           '#0284C7'
         )

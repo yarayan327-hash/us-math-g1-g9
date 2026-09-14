@@ -47,6 +47,23 @@ button:focus-visible {
   box-shadow: var(--shadow-focus);
 }
 
+button:not(:disabled) {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-fast) var(--motion-ease),
+    background-color var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease);
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0) scale(0.99);
+}
+
 .vm-surface {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9)),
@@ -204,6 +221,100 @@ button:focus-visible {
   min-height: min(58vh, 520px);
 }
 
+.vm-intro-card--universal {
+  min-height: clamp(30rem, 60vh, 34rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vh, 1.4rem);
+  background: #fff;
+}
+
+.vm-intro-card--universal::before,
+.vm-intro-card--universal .vm-intro-motif {
+  display: none;
+}
+
+.vm-challenge-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.vm-challenge-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 70fr) minmax(14rem, 30fr);
+  gap: clamp(1.2rem, 2.4vw, 2rem);
+  align-items: stretch;
+}
+
+.vm-challenge-problem-zone {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vh, 1.35rem);
+  text-align: left;
+}
+
+.vm-challenge-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--primary-blue);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.vm-challenge-problem-zone h1 {
+  max-width: 100%;
+  color: #222;
+  font-size: clamp(2.625rem, 3vw, 3.625rem);
+  line-height: 1.28;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+  animation: vm-page-soft-rise 340ms var(--motion-ease) both;
+}
+
+.vm-challenge-strategy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-top: 0.25rem;
+}
+
+.vm-challenge-visual-zone {
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  border-left: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.vm-challenge-visual-zone:empty::after {
+  content: "";
+  width: 100%;
+  max-width: 14rem;
+  height: 42%;
+  border-radius: 999px;
+  background: rgba(38, 183, 255, 0.035);
+}
+
+.vm-challenge-visual-zone--level-7,
+.vm-challenge-visual-zone--level-8,
+.vm-challenge-visual-zone--level-9 {
+  opacity: 0.9;
+}
+
 .vm-intro-card::before {
   content: "";
   position: absolute;
@@ -244,6 +355,14 @@ button:focus-visible {
   pointer-events: none;
 }
 
+.vm-intro-card--universal .vm-low-intro-scene {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: min(100%, clamp(12rem, 24vw, 19rem));
+  height: min(100%, clamp(12rem, 46vh, 20rem));
+}
+
 .vm-low-intro-scene__ground {
   position: absolute;
   right: 9%;
@@ -256,7 +375,8 @@ button:focus-visible {
 
 .vm-low-intro-scene__character,
 .vm-low-intro-scene__object,
-.vm-low-intro-scene__support {
+.vm-low-intro-scene__support,
+.vm-low-intro-scene__family {
   position: absolute;
   display: block;
   max-width: 100%;
@@ -320,6 +440,40 @@ button:focus-visible {
   bottom: 18%;
   width: 46%;
   height: 46%;
+}
+
+.vm-low-intro-scene--objectGroupRight .vm-low-intro-scene__ground {
+  right: 4%;
+  width: 88%;
+}
+
+.vm-low-intro-scene__family {
+  width: 34%;
+  height: 34%;
+  z-index: 3;
+}
+
+.vm-low-intro-scene__family--1 {
+  left: 12%;
+  bottom: 20%;
+}
+
+.vm-low-intro-scene__family--2 {
+  left: 35%;
+  bottom: 20%;
+  animation-delay: 70ms;
+}
+
+.vm-low-intro-scene__family--3 {
+  left: 24%;
+  bottom: 42%;
+  animation-delay: 120ms;
+}
+
+.vm-low-intro-scene__family--4 {
+  left: 47%;
+  bottom: 42%;
+  animation-delay: 170ms;
 }
 
 .vm-intro-hero {
@@ -819,6 +973,42 @@ button:focus-visible {
     min-height: auto;
   }
 
+  .vm-intro-card--universal {
+    min-height: auto;
+    gap: 1rem;
+  }
+
+  .vm-challenge-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vm-challenge-body {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .vm-challenge-problem-zone {
+    justify-content: flex-start;
+  }
+
+  .vm-challenge-problem-zone h1 {
+    font-size: clamp(1.95rem, 9vw, 2.75rem);
+    line-height: 1.24;
+  }
+
+  .vm-challenge-visual-zone {
+    min-height: 8rem;
+    border-left: 0;
+    border-top: 1px solid rgba(17, 24, 39, 0.06);
+    justify-content: flex-end;
+  }
+
+  .vm-intro-card--universal .vm-low-intro-scene {
+    width: 10rem;
+    height: 8rem;
+  }
+
   .vm-intro-card--hero-left,
   .vm-intro-card--hero-right,
   .vm-intro-card--diagonal-story,
@@ -840,6 +1030,10 @@ button:focus-visible {
 
   .vm-low-intro-scene {
     display: none;
+  }
+
+  .vm-intro-card--universal .vm-low-intro-scene {
+    display: block;
   }
 
   .vm-low-teaching-object {
@@ -878,6 +1072,27 @@ button:focus-visible {
   }
 }
 
+@media (max-height: 820px) and (min-width: 721px) {
+  .vm-intro-card--universal {
+    min-height: clamp(25rem, 56vh, 30rem);
+    gap: 0.9rem;
+  }
+
+  .vm-challenge-card-header {
+    padding-bottom: 0.75rem;
+  }
+
+  .vm-challenge-problem-zone h1 {
+    font-size: clamp(2.625rem, 2.65vw, 3.2rem);
+    line-height: 1.25;
+  }
+
+  .vm-intro-card--universal .vm-low-intro-scene {
+    width: min(100%, clamp(10rem, 21vw, 16rem));
+    height: min(100%, clamp(10rem, 40vh, 16rem));
+  }
+}
+
 @keyframes vm-low-scene-enter {
   from {
     opacity: 0;
@@ -904,6 +1119,17 @@ button:focus-visible {
   from {
     opacity: 0;
     transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vm-page-soft-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
     opacity: 1;

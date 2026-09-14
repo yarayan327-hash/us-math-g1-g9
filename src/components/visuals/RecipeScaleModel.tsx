@@ -19,8 +19,8 @@ export const RecipeScaleModel: React.FC<RecipeScaleModelProps> = ({
   const scaleMultiplier = Math.round(targetYield / baseYield);
 
   const ingredients = modelConfig.ingredients || [
-    { nameEN: 'Flour', nameZH: '面粉', amount: 3, unitEN: 'cups', unitZH: '杯', icon: '🌾' },
-    { nameEN: 'Sugar', nameZH: '白糖', amount: 2, unitEN: 'cups', unitZH: '杯', icon: '🧂' },
+    { nameEN: 'Flour', nameZH: '面粉', amount: 3, unitEN: 'cups', unitZH: '杯' },
+    { nameEN: 'Sugar', nameZH: '白糖', amount: 2, unitEN: 'cups', unitZH: '杯' },
   ];
 
   // Coordinates
@@ -93,7 +93,7 @@ export const RecipeScaleModel: React.FC<RecipeScaleModelProps> = ({
                 fontSize="13"
                 fontWeight="700"
               >
-                {ing.icon} {language === 'ZH' ? `${ing.amount} ${ing.unitZH} ${ing.nameZH}` : `${ing.amount} ${ing.unitEN} ${ing.nameEN}`}
+                {language === 'ZH' ? `${ing.amount} ${ing.unitZH} ${ing.nameZH}` : `${ing.amount} ${ing.unitEN} ${ing.nameEN}`}
               </text>
             </g>
           );
@@ -118,7 +118,7 @@ export const RecipeScaleModel: React.FC<RecipeScaleModelProps> = ({
           fontWeight="800"
           textAnchor="middle"
         >
-          {language === 'ZH' ? `🍪 烘烤产出：${baseYield} 块饼干` : `🍪 Yields: ${baseYield} Cookies`}
+          {language === 'ZH' ? `烘烤产出：${baseYield} 块饼干` : `Yields: ${baseYield} Cookies`}
         </text>
       </g>
 
@@ -233,7 +233,7 @@ export const RecipeScaleModel: React.FC<RecipeScaleModelProps> = ({
                   fontSize="13"
                   fontWeight="700"
                 >
-                  {ing.icon} {language === 'ZH' ? ing.nameZH : ing.nameEN}:{' '}
+                  {language === 'ZH' ? ing.nameZH : ing.nameEN}:{' '}
                   {stepNumber >= 6 && isTargetIng ? (
                     <tspan fontWeight="900" fill="#B45309">
                       {ing.amount} × {scaleMultiplier} = {targetAmount} {language === 'ZH' ? ing.unitZH : ing.unitEN} ★
@@ -267,7 +267,7 @@ export const RecipeScaleModel: React.FC<RecipeScaleModelProps> = ({
             fontWeight="800"
             textAnchor="middle"
           >
-            {language === 'ZH' ? `🍪 目标产出：${targetYield} 块饼干` : `🍪 Target Yield: ${targetYield} Cookies`}
+            {language === 'ZH' ? `目标产出：${targetYield} 块饼干` : `Target Yield: ${targetYield} Cookies`}
           </text>
         </g>
       )}
