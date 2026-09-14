@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { CourseStage, Language, StageId } from '../types';
 import { STAGES, STAGE_ORDER } from '../data/curriculum';
-import { Sparkles, ArrowRight, Compass, ChevronDown } from 'lucide-react';
-import { LevelBackground } from './LevelBackground';
-import { getAmbientMotionClass, getStageHeroAsset } from '../utils/visualTheme';
+import { Sparkles, ArrowRight, BookOpen, Compass, ChevronDown } from 'lucide-react';
 
 interface PlacementViewProps {
   recommendedStageId: StageId;
@@ -26,13 +24,11 @@ export const PlacementView: React.FC<PlacementViewProps> = ({
   const [showOverride, setShowOverride] = useState(false);
 
   const stage: CourseStage = STAGES[selectedStageId];
-  const heroAsset = getStageHeroAsset(stage);
 
   return (
-    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none relative">
-      <LevelBackground levelNumber={stage.levelNumber} mode="lesson" />
+    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none">
       {/* Top Header Bar - 16:9 Consistent */}
-      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#26B7FF]/15 text-[#26B7FF] text-xs font-bold uppercase tracking-wider">
             <Sparkles size={14} />
@@ -54,9 +50,9 @@ export const PlacementView: React.FC<PlacementViewProps> = ({
       </header>
 
       {/* Main 16:9 Grid */}
-      <main className="flex-1 w-full p-6 sm:p-8 grid grid-cols-12 gap-6 min-h-0 overflow-hidden relative z-10">
+      <main className="flex-1 w-full p-6 sm:p-8 grid grid-cols-12 gap-6 min-h-0 overflow-hidden">
         {/* Left / Center Content: 65% (8 cols) */}
-        <div className="col-span-12 lg:col-span-8 vm-surface vm-enter rounded-3xl p-8 sm:p-10 flex flex-col justify-between h-full">
+        <div className="col-span-12 lg:col-span-8 bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-gray-200/80 flex flex-col justify-between h-full">
           <div className="space-y-6 my-auto">
             <div className="space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[#666666]">
@@ -118,16 +114,10 @@ export const PlacementView: React.FC<PlacementViewProps> = ({
         </div>
 
         {/* Right Asset Area: 35% (4 cols) */}
-        <div className="col-span-12 lg:col-span-4 vm-surface vm-enter rounded-3xl p-6 flex flex-col items-center justify-center h-full relative overflow-hidden bg-gradient-to-b from-white to-gray-50/50">
-          <div className="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-[#EAF7FF] opacity-70" />
+        <div className="col-span-12 lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm border border-gray-200/80 flex flex-col items-center justify-center h-full relative overflow-hidden bg-gradient-to-b from-white to-gray-50/50">
           <div className="flex flex-col items-center justify-center space-y-5 text-center">
-            <div className="w-28 h-28 rounded-[28px] vm-asset-orb flex items-center justify-center shadow-sm relative">
-              <img
-                src={heroAsset}
-                alt=""
-                className={`vm-hero-asset ${getAmbientMotionClass(stage.levelNumber)} w-20 h-20 object-contain`}
-                draggable={false}
-              />
+            <div className="w-20 h-20 rounded-3xl bg-[#26B7FF]/10 border-2 border-[#26B7FF] flex items-center justify-center text-[#26B7FF] shadow-sm">
+              <BookOpen size={36} />
             </div>
             <div className="space-y-1 max-w-[220px]">
               <span className="text-sm font-bold text-[#333333] block">
@@ -144,7 +134,7 @@ export const PlacementView: React.FC<PlacementViewProps> = ({
       </main>
 
       {/* Bottom Bar */}
-      <footer className="w-full h-18 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <footer className="w-full h-18 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0">
         <span className="text-xs text-[#777777]">
           {language === 'ZH' ? '确认阶段后进入互动课件' : 'Confirm stage to enter interactive courseware'}
         </span>

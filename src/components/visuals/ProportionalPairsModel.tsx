@@ -31,8 +31,8 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
 
   const labelA = language === 'ZH' ? modelConfig.pairNameZH_A || '杯冰沙' : modelConfig.pairNameEN_A || 'Smoothies';
   const labelB = language === 'ZH' ? modelConfig.pairNameZH_B || '颗草莓' : modelConfig.pairNameEN_B || 'Strawberries';
-  const itemMarkA = language === 'ZH' ? '杯' : 'Cup';
-  const itemMarkB = language === 'ZH' ? '莓' : 'Berry';
+  const iconA = modelConfig.pairIconA || '🥤';
+  const iconB = modelConfig.pairIconB || '🍓';
 
   // Coordinates
   const LEFT_X = 60;
@@ -89,7 +89,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
           fontWeight="800"
           textAnchor="middle"
         >
-          {pairA} {itemMarkA}
+          {pairA} {iconA}
         </text>
 
         <text
@@ -122,7 +122,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
           fontWeight="800"
           textAnchor="middle"
         >
-          {pairB} {itemMarkB}
+          {pairB} {iconB}
         </text>
       </g>
 
@@ -207,7 +207,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
             fontWeight="800"
             textAnchor="middle"
           >
-            1 {itemMarkA}
+            1 {iconA}
           </text>
 
           <text
@@ -240,7 +240,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
             fontWeight="800"
             textAnchor="middle"
           >
-            {unitRate} {itemMarkB}
+            {unitRate} {iconB}
           </text>
         </g>
       )}
@@ -283,7 +283,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
                   fontSize="16"
                   textAnchor="middle"
                 >
-                  {itemMarkA}
+                  {iconA}
                 </text>
                 <text
                   x={bx + 54}
@@ -293,7 +293,7 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
                   fontWeight="800"
                   textAnchor="middle"
                 >
-                  {stepNumber >= 4 ? `${unitRate} ${itemMarkB}` : `? ${itemMarkB}`}
+                  {stepNumber >= 4 ? `${unitRate} ${iconB}` : `? ${iconB}`}
                 </text>
               </g>
             );
@@ -306,8 +306,8 @@ export const ProportionalPairsModel: React.FC<ProportionalPairsModelProps> = ({
               TARGET_X + 5 * 92 - 8,
               TARGET_Y + 2 * 64 + 10,
               language === 'ZH'
-                ? `总需草莓 = ${targetA} × ${unitRate} = ${totalB} ${labelB}`
-                : `Total Needed = ${targetA} × ${unitRate} = ${totalB} ${labelB}`,
+                ? `总需草莓 = ${targetA} × ${unitRate} = ${totalB} ${labelB} 🍓`
+                : `Total Needed = ${targetA} × ${unitRate} = ${totalB} ${labelB} 🍓`,
               'bottom',
               '#333333'
             )

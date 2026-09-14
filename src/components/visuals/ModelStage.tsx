@@ -917,16 +917,14 @@ export const ModelStage: React.FC<ModelStageProps> = ({
 
             const getItemIcon = (name: string) => {
               const lower = name.toLowerCase();
-              if (lower.includes('shirt') || lower.includes('衬衫')) return 'Shirt';
-              if (lower.includes('hat') || lower.includes('帽子')) return 'Hat';
-              if (lower.includes('pen') || lower.includes('钢笔')) return 'Pen';
-              if (lower.includes('notebook') || lower.includes('笔记本')) return 'Notebook';
-              if (lower.includes('eraser') || lower.includes('橡皮')) return 'Eraser';
-              if (lower.includes('pencil') || lower.includes('铅笔')) return 'Pencil';
-              if (lower.includes('adult') || lower.includes('成人')) return 'Adult';
-              if (lower.includes('child') || lower.includes('儿童')) return 'Child';
-              if (lower.includes('ticket')) return 'Ticket';
-              return 'Item';
+              if (lower.includes('shirt') || lower.includes('衬衫')) return '👕';
+              if (lower.includes('hat') || lower.includes('帽子')) return '🧢';
+              if (lower.includes('pen') || lower.includes('钢笔')) return '✏️';
+              if (lower.includes('notebook') || lower.includes('笔记本')) return '📓';
+              if (lower.includes('eraser') || lower.includes('橡皮')) return '🧼';
+              if (lower.includes('pencil') || lower.includes('铅笔')) return '✏️';
+              if (lower.includes('adult') || lower.includes('成人') || lower.includes('child') || lower.includes('儿童') || lower.includes('ticket')) return '🎟️';
+              return '📦';
             };
 
             const icon1 = getItemIcon(item1NameEN + ' ' + item1NameZH);

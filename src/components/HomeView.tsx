@@ -1,7 +1,6 @@
 import React from 'react';
 import { Language, StageId } from '../types';
 import { ArrowRight, Sparkles, BookOpen } from 'lucide-react';
-import { LevelBackground } from './LevelBackground';
 
 interface HomeViewProps {
   language: Language;
@@ -18,10 +17,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onToggleLanguage
 }) => {
   return (
-    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none relative">
-      <LevelBackground levelNumber={4} mode="home" />
+    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none">
       {/* Top Header Bar */}
-      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 p-1.5 rounded-xl bg-[#F6F6F6] border border-gray-200">
             <div className="w-6 h-6 rounded-lg bg-[#26B7FF] flex items-center justify-center text-white font-bold text-xs">
@@ -50,8 +48,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </header>
 
       {/* Main 16:9 Presentation Canvas - Two Clear Teacher Entry Paths */}
-      <main className="flex-1 w-full max-w-6xl mx-auto p-6 sm:p-10 flex flex-col justify-center min-h-0 overflow-y-auto relative z-10">
-        <div className="text-center space-y-2 mb-8 vm-enter">
+      <main className="flex-1 w-full max-w-6xl mx-auto p-6 sm:p-10 flex flex-col justify-center min-h-0 overflow-y-auto">
+        <div className="text-center space-y-2 mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#26B7FF] text-xs font-bold uppercase tracking-wider border border-blue-100 mb-1">
             <Sparkles size={14} />
             <span>{language === 'ZH' ? '教学准备 · 选择进入方式' : 'Teacher Setup · Choose Starting Flow'}</span>
@@ -72,7 +70,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <button
             id="entry-option-diagnostic"
             onClick={onStartDiagnostic}
-            className="vm-surface vm-control rounded-3xl p-6 sm:p-8 border-2 border-gray-200 hover:border-[#26B7FF] hover:shadow-lg text-left flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+            className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-gray-200 hover:border-[#26B7FF] hover:shadow-lg transition-all text-left flex flex-col justify-between group cursor-pointer relative overflow-hidden"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -115,7 +113,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <button
             id="entry-option-direct-level"
             onClick={onOpenCourseMenu}
-            className="vm-surface vm-control rounded-3xl p-6 sm:p-8 border-2 border-gray-200 hover:border-[#333333] hover:shadow-lg text-left flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+            className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-gray-200 hover:border-[#333333] hover:shadow-lg transition-all text-left flex flex-col justify-between group cursor-pointer relative overflow-hidden"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -157,7 +155,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </main>
 
       {/* Bottom Bar */}
-      <footer className="w-full h-14 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 text-xs text-[#777777] relative z-10">
+      <footer className="w-full h-14 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 text-xs text-[#777777]">
         <span>{language === 'ZH' ? '两组通道随时可用 · 随时调出课程目录' : 'Dual entry pathways · Course menu accessible anytime'}</span>
         <span className="text-[#333333] font-semibold">{language === 'ZH' ? '全屏 16:9 课件' : '16:9 Courseware'}</span>
       </footer>

@@ -4,7 +4,6 @@ import { getStage } from '../data/curriculum';
 import { getStageReview, StageReviewData } from '../data/reviews';
 import { ReviewVisualRecap } from './visuals/ReviewVisualRecap';
 import { CheckCircle2, ArrowRight, BrainCircuit, Sparkles, XCircle } from 'lucide-react';
-import { LevelBackground } from './LevelBackground';
 
 interface ReviewViewProps {
   stageId: StageId;
@@ -32,10 +31,9 @@ export const ReviewView: React.FC<ReviewViewProps> = ({
   const isAllAnswered = answeredCount >= reviewData.retrievalQuestions.length;
 
   return (
-    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none relative">
-      <LevelBackground levelNumber={stage.levelNumber} mode="lesson" />
+    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none">
       {/* Top Header Bar - 16:9 Consistent System */}
-      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#26B7FF] text-xs font-bold uppercase tracking-wider border border-blue-100">
             <BrainCircuit size={15} />
@@ -60,9 +58,9 @@ export const ReviewView: React.FC<ReviewViewProps> = ({
       </header>
 
       {/* Main 16:9 Grid */}
-      <main className="flex-1 w-full p-5 sm:p-6 grid grid-cols-12 gap-5 min-h-0 overflow-hidden relative z-10">
+      <main className="flex-1 w-full p-5 sm:p-6 grid grid-cols-12 gap-5 min-h-0 overflow-hidden">
         {/* Left Content Area: Core Ideas + Interactive Recall (65% / 8 cols) */}
-        <div className="col-span-12 lg:col-span-8 vm-surface vm-enter rounded-3xl p-6 sm:p-8 flex flex-col justify-between h-full overflow-hidden">
+        <div className="col-span-12 lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80 flex flex-col justify-between h-full overflow-hidden">
           <div className="space-y-4 overflow-y-auto pr-1">
             {/* Stage-Specific Core Ideas */}
             <div className="space-y-2">
@@ -155,13 +153,13 @@ export const ReviewView: React.FC<ReviewViewProps> = ({
         </div>
 
         {/* Right Stage-Specific Visual Model Recap: 35% / 4 cols */}
-        <div className="col-span-12 lg:col-span-4 vm-surface vm-enter rounded-3xl p-6 flex flex-col items-center justify-center h-full relative overflow-hidden bg-gradient-to-b from-white to-gray-50/50">
+        <div className="col-span-12 lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm border border-gray-200/80 flex flex-col items-center justify-center h-full relative overflow-hidden bg-gradient-to-b from-white to-gray-50/50">
           <ReviewVisualRecap stageId={stageId} language={language} />
         </div>
       </main>
 
       {/* Bottom Bar Action */}
-      <footer className="w-full h-18 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <footer className="w-full h-18 bg-white border-t border-gray-200/80 px-6 sm:px-8 flex items-center justify-between shrink-0">
         <span className="text-xs text-[#777777]">
           {language === 'ZH' ? '点击下方按钮生成学习定位报告' : 'Click to generate your final skill report'}
         </span>

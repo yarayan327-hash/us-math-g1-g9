@@ -320,8 +320,8 @@ export const SamAlexCardTransferModel: React.FC<SamAlexCardTransferModelProps> =
             textAnchor="middle"
           >
             {language === 'ZH'
-              ? '移动卡牌不改变总数：14 + 6 = 20，10 + 10 = 20'
-              : 'Moving cards does not change the total: 14 + 6 = 20; 10 + 10 = 20'}
+              ? '✨ 移动卡牌不改变总数：14 + 6 = 20，10 + 10 = 20'
+              : '✨ Moving cards does not change the total: 14 + 6 = 20; 10 + 10 = 20'}
           </text>
         </g>
       )}

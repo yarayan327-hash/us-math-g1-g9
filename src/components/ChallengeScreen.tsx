@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Activity, CourseStage, Language } from '../types';
 import { Sparkles, Eye, BrainCircuit, ArrowRight, HelpCircle, Layers } from 'lucide-react';
-import { LevelBackground } from './LevelBackground';
-import { getProblemContextTheme } from '../utils/visualTheme';
-import { getLowGradeIntroScene, LowGradeIntroScene } from './LowGradeScene';
 
 interface ChallengeScreenProps {
   stage: CourseStage;
@@ -28,12 +25,9 @@ export const ChallengeScreen: React.FC<ChallengeScreenProps> = ({
   const [isThinkingMode, setIsThinkingMode] = useState<boolean>(false);
 
   const hasStrategyOptions = activity.strategyOptions && activity.strategyOptions.length > 0;
-  const contextTheme = getProblemContextTheme(activity);
-  const lowGradeIntroScene = getLowGradeIntroScene(stage.levelNumber, activity.id);
 
   return (
-    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none relative">
-      <LevelBackground levelNumber={stage.levelNumber} mode="lesson" />
+    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none">
       {/* Top Navigation Header */}
       <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 flex items-center justify-between shrink-0 z-10">
         <div className="flex items-center gap-4">
@@ -85,10 +79,10 @@ export const ChallengeScreen: React.FC<ChallengeScreenProps> = ({
       </header>
 
       {/* Main 16:9 Challenge Canvas */}
-      <main className="flex-1 w-full max-w-[92rem] mx-auto p-5 sm:p-6 flex flex-col justify-center overflow-y-auto relative z-10">
-        <div className={`vm-surface vm-enter vm-intro-card vm-intro-card--universal vm-theme--${contextTheme} rounded-3xl p-6 sm:p-8 relative overflow-hidden`}>
+      <main className="flex-1 w-full max-w-5xl mx-auto p-5 sm:p-6 flex flex-col justify-center overflow-y-auto">
+        <div className="bg-white rounded-3xl border border-gray-200/80 shadow-xs p-6 sm:p-8 space-y-6">
           {/* Level Superpower Header */}
-          <div className="vm-challenge-card-header relative z-10">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-[#26B7FF]/10 text-[#26B7FF] flex items-center justify-center font-black text-sm">
                 L{stage.levelNumber}
@@ -110,63 +104,57 @@ export const ChallengeScreen: React.FC<ChallengeScreenProps> = ({
             </div>
           </div>
 
-          <div className="vm-challenge-body relative z-10">
-            {/* Problem Presentation - Big, clear, readable */}
-            <section className="vm-challenge-problem-zone">
-              <span className="vm-challenge-label">
-                <BrainCircuit size={15} />
-                <span>{language === 'ZH' ? '挑战题目' : 'The Challenge'}</span>
-              </span>
-              <h1>
-                {language === 'ZH' ? activity.questionZH : activity.questionEN}
-              </h1>
-
-              {/* Optional Strategy Selection (e.g. for Level 9 Master Challenge) */}
-              {hasStrategyOptions && (
-                <div className="vm-challenge-strategy">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#666666]">
-                    {language === 'ZH' ? '选择建模策略：' : 'Choose a Strategy:'}
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {activity.strategyOptions!.map((opt) => {
-                      const isSelected = selectedStrategyId === opt.id;
-                      return (
-                        <button
-                          key={opt.id}
-                          onClick={() => setSelectedStrategyId(opt.id)}
-                          className={`p-3.5 rounded-2xl text-left border transition-all cursor-pointer text-xs font-bold ${
-                            isSelected
-                              ? opt.isCorrect
-                                ? 'bg-emerald-50 border-emerald-400 text-emerald-900 ring-2 ring-emerald-200'
-                                : 'bg-amber-50 border-amber-300 text-amber-900'
-                              : 'bg-white border-gray-200 text-[#333333] hover:border-gray-300'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-extrabold">{language === 'ZH' ? opt.labelZH : opt.labelEN}</span>
-                          </div>
-                          {isSelected && (
-                            <p className="text-[11px] font-normal mt-1 opacity-90">
-                              {language === 'ZH' ? opt.explanationZH : opt.explanationEN}
-                            </p>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </section>
-
-            <aside className={`vm-challenge-visual-zone vm-challenge-visual-zone--level-${stage.levelNumber}`} aria-hidden={!lowGradeIntroScene}>
-              {lowGradeIntroScene && <LowGradeIntroScene config={lowGradeIntroScene} />}
-            </aside>
+          {/* Problem Presentation - Big, clear, readable */}
+          <div className="space-y-4 py-4">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#26B7FF] flex items-center gap-1.5">
+              <BrainCircuit size={15} />
+              <span>{language === 'ZH' ? '挑战题目' : 'The Challenge'}</span>
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-[#222222] leading-snug tracking-tight">
+              {language === 'ZH' ? activity.questionZH : activity.questionEN}
+            </h1>
           </div>
+
+          {/* Optional Strategy Selection (e.g. for Level 9 Master Challenge) */}
+          {hasStrategyOptions && (
+            <div className="space-y-2.5 pt-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#666666]">
+                {language === 'ZH' ? '选择建模策略：' : 'Choose a Strategy:'}
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {activity.strategyOptions!.map((opt) => {
+                  const isSelected = selectedStrategyId === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedStrategyId(opt.id)}
+                      className={`p-3.5 rounded-2xl text-left border transition-all cursor-pointer text-xs font-bold ${
+                        isSelected
+                          ? opt.isCorrect
+                            ? 'bg-emerald-50 border-emerald-400 text-emerald-900 ring-2 ring-emerald-200'
+                            : 'bg-amber-50 border-amber-300 text-amber-900'
+                          : 'bg-white border-gray-200 text-[#333333] hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-extrabold">{language === 'ZH' ? opt.labelZH : opt.labelEN}</span>
+                      </div>
+                      {isSelected && (
+                        <p className="text-[11px] font-normal mt-1 opacity-90">
+                          {language === 'ZH' ? opt.explanationZH : opt.explanationEN}
+                        </p>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
       {/* Bottom Action Footer - Quiet, clean, student-centered */}
-      <footer className="w-full h-18 bg-white border-t border-gray-200 px-6 sm:px-10 flex items-center justify-between shrink-0 relative z-10">
+      <footer className="w-full h-18 bg-white border-t border-gray-200 px-6 sm:px-10 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3 text-xs text-[#777777] font-semibold">
           <span>{language === 'ZH' ? '准备好后，点击右侧逐步推导' : 'When ready, begin step-by-step visual modeling'}</span>
         </div>

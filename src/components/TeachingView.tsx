@@ -3,10 +3,6 @@ import { Activity, CourseStage, Language, VisualStep } from '../types';
 import { ModelStage } from './visuals/ModelStage';
 import { ChallengeScreen } from './ChallengeScreen';
 import { ChevronLeft, ChevronRight, HelpCircle, Layers, CheckCircle2, Sparkles, BookOpen, Lock } from 'lucide-react';
-import { LevelBackground } from './LevelBackground';
-import { StepPresentationLayer } from './StepPresentationLayer';
-import { getTeachingVisualState } from '../utils/visualTheme';
-import { CharacterFeedbackZone, getLowGradeFeedbackAsset } from './LowGradeScene';
 
 interface TeachingViewProps {
   stage: CourseStage;
@@ -43,7 +39,6 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
   const currentStep: VisualStep = currentActivity.steps[stepIndex];
   const isFinalStepOfActivity = stepIndex >= currentActivity.steps.length - 1;
   const isFinalActivityOfStage = activityIndex >= stage.activities.length - 1;
-  const visualState = getTeachingVisualState(currentStep, stepIndex, currentActivity.steps.length);
 
   // Challenge screen control: Page 1 (Full Problem Display) vs Page 2 (Visual Modeling Steps)
   // Each level and problem begins on Page 1 (Full Problem Display)
@@ -58,14 +53,6 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
 
   const interaction = currentActivity.interaction;
   const isInteractionActive = interaction && interaction.triggerAtStep === currentStep.stepNumber;
-  const feedbackState = interactionFeedback.show
-    ? interactionFeedback.isCorrect
-      ? 'correct'
-      : 'retry'
-    : isInteractionActive
-      ? 'thinking'
-      : null;
-  const feedbackAsset = getLowGradeFeedbackAsset(stage.levelNumber, currentActivity.id, feedbackState);
 
   const activeStepRef = useRef<HTMLDivElement>(null);
   const stepListRef = useRef<HTMLDivElement>(null);
@@ -96,8 +83,7 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none relative">
-      <LevelBackground levelNumber={stage.levelNumber} mode="lesson" />
+    <div className="w-full h-full flex flex-col justify-between overflow-hidden bg-[#F6F6F6] select-none">
       {/* Top Fixed Navigation Bar */}
       <header className="w-full h-16 bg-white border-b border-gray-200/80 px-6 flex items-center justify-between shrink-0 z-10">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0 max-w-[45%]">
@@ -161,9 +147,9 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
       </header>
 
       {/* Main 16:9 Teaching Stage Canvas */}
-      <main className="flex-1 w-full p-4 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-hidden min-h-0 relative z-10">
+      <main className="flex-1 w-full p-4 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-hidden min-h-0">
         {/* Left Instruction Panel: ~33% (4 cols in 12-col grid) */}
-        <div className={`lg:col-span-4 vm-surface vm-enter vm-step-panel vm-step-panel--${visualState} rounded-3xl p-5 flex flex-col justify-between overflow-hidden h-full`}>
+        <div className="lg:col-span-4 bg-white rounded-3xl p-5 shadow-sm border border-gray-200/70 flex flex-col justify-between overflow-hidden h-full">
           {/* 1. STICKY TOP QUESTION AREA - Never scrolls away */}
           <div className="shrink-0 pb-3 border-b border-gray-100 space-y-2">
             <div className="flex items-center justify-between">
@@ -199,12 +185,12 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
                 <div
                   key={`step-card-${idx}`}
                   ref={isCurrent ? activeStepRef : null}
-                    className={`p-3.5 rounded-2xl text-xs sm:text-sm transition-all duration-200 ${
+                  className={`p-3.5 rounded-2xl text-xs sm:text-sm transition-all duration-200 ${
                     isCurrent
-                      ? 'vm-current-step bg-[#26B7FF]/10 border-2 border-[#26B7FF] text-[#333333] font-semibold shadow-xs ring-1 ring-[#26B7FF]/20'
+                      ? 'bg-[#26B7FF]/10 border-2 border-[#26B7FF] text-[#333333] font-semibold shadow-xs ring-1 ring-[#26B7FF]/20'
                       : isCompleted
-                        ? 'vm-completed-step bg-[#F6F6F6] text-[#666666] border border-gray-200/60 opacity-80'
-                        : 'vm-future-step bg-gray-50/40 border border-dashed border-gray-200 text-gray-400 opacity-35'
+                        ? 'bg-[#F6F6F6] text-[#666666] border border-gray-200/60 opacity-80'
+                        : 'bg-gray-50/40 border border-dashed border-gray-200 text-gray-400 opacity-40'
                   }`}
                 >
                   <div className="flex items-start gap-2.5">
@@ -228,9 +214,11 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
                         {language === 'ZH' ? step.instructionZH : step.instructionEN}
                       </p>
                     ) : (
-                      <div className="flex items-center gap-1.5 text-gray-400 py-0.5 select-none" aria-hidden="true">
+                      <div className="flex items-center gap-1.5 text-gray-400 py-0.5 select-none">
                         <Lock size={12} className="shrink-0 text-gray-400" />
-                        <span className="vm-locked-line" />
+                        <span className="text-xs font-medium tracking-wide">
+                          {language === 'ZH' ? `第 ${idx + 1} 步 · 点击下方“显示下一步”解锁` : `Step ${idx + 1} · Locked (Advance to reveal)`}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -286,15 +274,7 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
         </div>
 
         {/* Right Visual Stage: ~67% (8 cols in 12-col grid) - FIXED COORDINATES */}
-        <div className={`lg:col-span-8 vm-surface vm-enter vm-model-shell vm-model-shell--${visualState} rounded-3xl p-3 sm:p-4 flex flex-col justify-between overflow-hidden min-h-0 relative`}>
-          <StepPresentationLayer
-            stage={stage}
-            activity={currentActivity}
-            currentStep={currentStep}
-            stepIndex={stepIndex}
-            totalSteps={currentActivity.steps.length}
-            language={language}
-          />
+        <div className="lg:col-span-8 bg-white rounded-3xl shadow-sm border border-gray-200/70 p-3 sm:p-4 flex flex-col justify-between overflow-hidden min-h-0 relative">
           <ModelStage
             activity={currentActivity}
             currentStep={currentStep}
@@ -303,14 +283,11 @@ export const TeachingView: React.FC<TeachingViewProps> = ({
             onUnitTap={onUnitTap}
             isInteractiveTapActive={isInteractionActive && interaction?.type === 'tap_relationship'}
           />
-          {feedbackAsset && feedbackState && (
-            <CharacterFeedbackZone asset={feedbackAsset} state={feedbackState} />
-          )}
         </div>
       </main>
 
       {/* Fixed Bottom Teacher Controls Bar */}
-      <footer className="w-full h-18 bg-white border-t border-gray-200 px-6 sm:px-10 flex items-center justify-between shrink-0 relative z-10">
+      <footer className="w-full h-18 bg-white border-t border-gray-200 px-6 sm:px-10 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
