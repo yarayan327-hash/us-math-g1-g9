@@ -1,7 +1,35 @@
 import { randomUUID } from 'node:crypto';
 import { neon } from '@neondatabase/serverless';
-import { SCREENING_QUESTIONS, TEST_VERSION } from '../src/teacher-test/questionBank.ts';
-import { scoreScreening } from '../src/teacher-test/scoring.ts';
+
+const TEST_VERSION = 'Teacher Math Screening v1.0';
+const QUESTION_IDS = Array.from({ length: 20 }, (_, index) => `Q${String(index + 1).padStart(2, '0')}`);
+const ANSWER_KEYS = Object.fromEntries(QUESTION_IDS.map((id, index) => [id, 'BBABBCBBCBBCBBBABBBB'[index]]));
+const JUDGMENT_IDS = new Set(['Q02', 'Q03', 'Q05', 'Q08', 'Q11', 'Q16']);
+
+function scoreScreening(answers) {
+  const questionResults = QUESTION_IDS.map((questionId) => ({
+    questionId,
+    selectedAnswer: answers[questionId],
+    correctAnswer: ANSWER_KEYS[questionId],
+    isCorrect: answers[questionId] === ANSWER_KEYS[questionId]
+  }));
+  const countCorrect = (ids) => ids.filter((id) => answers[id] === ANSWER_KEYS[id]).length;
+  const bandA = countCorrect(QUESTION_IDS.slice(0, 6));
+  const bandB = countCorrect(QUESTION_IDS.slice(6, 13));
+  const bandC = countCorrect(QUESTION_IDS.slice(13, 20));
+  const teachingJudgment = countCorrect([...JUDGMENT_IDS]);
+  const totalCorrect = bandA + bandB + bandC;
+  const totalScore = totalCorrect * 5;
+  const overallResult = totalScore >= 85 ? 'STRONG PASS'
+    : totalScore >= 70 ? 'PASS'
+      : totalScore >= 60 ? 'CONDITIONAL'
+        : 'NOT PASS';
+  const recommendedRange = bandA < 5 ? 'NOT YET QUALIFIED'
+    : bandB < 5 ? 'G1-G3'
+      : bandC < 5 ? 'G1-G6'
+        : 'G1-G9';
+  return { questionResults, totalCorrect, totalScore, overallResult, bandA, bandB, bandC, teachingJudgment, recommendedRange };
+}
 
 function getSql() {
   if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not configured');
@@ -28,12 +56,12 @@ function validateAnswers(value) {
   if (!value || typeof value !== 'object') return null;
   const validKeys = ['A', 'B', 'C', 'D'];
   const answers = {};
-  for (const question of SCREENING_QUESTIONS) {
-    const answer = value[question.id];
+  for (const questionId of QUESTION_IDS) {
+    const answer = value[questionId];
     if (!validKeys.includes(answer)) return null;
-    answers[question.id] = answer;
+    answers[questionId] = answer;
   }
-  return Object.keys(value).length === SCREENING_QUESTIONS.length ? answers : null;
+  return Object.keys(value).length === QUESTION_IDS.length ? answers : null;
 }
 
 export default async function handler(request, response) {
