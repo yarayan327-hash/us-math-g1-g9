@@ -3,6 +3,7 @@ import { ArrowLeft, ChevronDown, Search, X } from 'lucide-react';
 import { SCREENING_QUESTIONS, TEST_VERSION } from './questionBank';
 import { AnswerKey, PublicSubmission } from './types';
 import './teacher-test.css';
+import './teacher-results.css';
 
 type SortMode = 'newest' | 'oldest' | 'score-high' | 'score-low';
 

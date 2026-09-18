@@ -1,0 +1,9 @@
+.results-page {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.detail-main {
+  padding-bottom: 40px;
+}

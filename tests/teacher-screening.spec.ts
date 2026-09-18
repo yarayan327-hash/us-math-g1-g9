@@ -62,6 +62,11 @@ test('results dashboard searches, filters, sorts, opens details, and never displ
   await expect(page.getByRole('heading', { name: 'Sarah Ahmed' })).toBeVisible();
   await expect(page.getByText('Question-by-question results')).toBeVisible();
   await expect(page.getByText(/private@example.com|hidden@example.com/)).toHaveCount(0);
+  await expect(page.locator('.answer-review article')).toHaveCount(20);
+  const detailPage = page.locator('.results-page');
+  expect(await detailPage.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+  await detailPage.evaluate((element) => element.scrollTo(0, element.scrollHeight));
+  await expect(page.locator('.answer-review article').last()).toBeVisible();
 });
 
 test('existing student course still renders at the root route', async ({ page }) => {
