@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/teacher-test", "destination": "/index.html" },
+    { "source": "/teacher-test/results", "destination": "/index.html" }
+  ]
+}
